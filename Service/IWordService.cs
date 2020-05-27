@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RandomShowEnglish.Helper
+namespace RandomShowEnglish.Service
 {
-    public interface IRandInstance
+    public interface IWordService
     {
-        Random GetRandIns();
+
     }
 }
