@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -62,6 +63,7 @@ namespace RandomShowEnglish
             services.AddScoped<IWordRepository, WordRepository>();
             services.AddScoped<ILessonRepository, LessonRepository>();
             services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IWordService, WordService>();
             services.AddScoped<ILessonService, LessonService>();
         }
 

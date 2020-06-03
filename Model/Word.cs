@@ -11,6 +11,7 @@ namespace RandomShowEnglish.Model
         public string Name { get; set; }
         public string Synonym { get; set; }
         public string Mean { get; set; }
+        public Guid LessonId { get; set; }
         public Lesson Lesson { get; set; }
     }
 }

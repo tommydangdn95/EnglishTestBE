@@ -13,7 +13,7 @@ namespace RandomShowEnglish.Repository
         Task Create(Word word);
         Task Update(Word word);
         Task Delete(Word word);
-        Task CreateRange(List<Word> words);
+        Task CreateRange(IEnumerable<Word> words);
 
         Task<IEnumerable<Word>> GetWordByLesson(Guid lessonId);
     }

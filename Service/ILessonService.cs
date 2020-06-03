@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using RandomShowEnglish.Model;
 using RandomShowEnglish.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,6 @@ namespace RandomShowEnglish.Service
     public interface ILessonService
     {
         Task CreateLesson(LessonViewModel lesson, IFormFile file);
-        Task<WordViewModel> GetRandomWord(Guid lessonId);
+        Task<IEnumerable<Lesson>> GetAllLesson();
     }
 }

@@ -21,7 +21,7 @@ namespace RandomShowEnglish.Repository
             await this._dbContext.SaveChangesAsync();
         }
 
-        public async Task CreateRange(List<Word> words)
+        public async Task CreateRange(IEnumerable<Word> words)
         {
             await this._dbContext.Words.AddRangeAsync(words);
             await this._dbContext.SaveChangesAsync();

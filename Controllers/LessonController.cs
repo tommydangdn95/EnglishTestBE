@@ -33,12 +33,12 @@ namespace RandomShowEnglish.Controllers
             return Ok();
         }
 
+
         [HttpGet]
-        public async Task<IActionResult> GetWord()
+        public async Task<IActionResult> GetLesson()
         {
-            Guid id = Guid.Parse("AB4A9079-E48E-4732-A429-6273CACD7663");
-            var words = await this._lessonService.GetRandomWord(id);
-            return Ok(words);
+            var lessons = await this._lessonService.GetAllLesson();
+            return Ok(lessons);
         }
     }
 }

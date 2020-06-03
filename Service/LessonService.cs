@@ -15,47 +15,38 @@ namespace RandomShowEnglish.Service
     {
         private readonly IFileService _fileService;
         private readonly ILessonRepository _lessonRepository;
-        private readonly IWordRepository _wordRepository;
+        private readonly IWordService _wordService;
         private readonly static Random random = new Random();
-        public LessonService(IFileService fileService, ILessonRepository lessonRepository, IWordRepository wordRepository)
+        public LessonService(IFileService fileService, ILessonRepository lessonRepository, IWordService wordService)
         {
             this._fileService = fileService;
             this._lessonRepository = lessonRepository;
-            this._wordRepository = wordRepository;
+            this._wordService = wordService;
         }
         public async Task CreateLesson(LessonViewModel lessonViewModel, IFormFile file)
         {
             var id = Guid.NewGuid();
 
             // create new lesson
-            var listWord = await this._fileService.GetListWordAsync(file);
+            var listWordFromFile = await this._fileService.GetListWordAsync(file);
 
-            // save lesson
             var lesson = lessonViewModel.Adapt<Lesson>();
             lesson.Id = id;
+
+            // save lesson
             await this._lessonRepository.Create(lesson);
 
+            // set id for all list words
+            var listwords = await this._wordService.SetLessonIdListWordsAsync(listWordFromFile, lesson);
+            listWordFromFile = listwords.ToList();
+
             // save list word
-            await this._wordRepository.CreateRange(listWord);
+            await this._wordService.CreateListWords(listWordFromFile);
         }
 
-        public async Task<WordViewModel> GetRandomWord(Guid lessonId)
+        public async Task<IEnumerable<Lesson>> GetAllLesson()
         {
-            var listWords = await this.GetListWord(lessonId);
-            if(listWords != null)
-            {
-                if(listWords.Count() > 0)
-                {
-                    var word = listWords.ToList().ElementAt(random.Next(listWords.Count()));
-                    return word.Adapt<WordViewModel>();
-                } 
-            }
-            return new WordViewModel();
-        }
-
-        public async Task<IEnumerable<Word>> GetListWord(Guid lessonId)
-        {
-            return await this._wordRepository.GetWordByLesson(lessonId);
+            return await this._lessonRepository.GetLessons();
         }
     }
 }
